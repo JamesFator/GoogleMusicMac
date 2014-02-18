@@ -101,6 +101,7 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
             return NULL;
             
 		case NX_KEYTYPE_FAST:   // F9
+		case NX_KEYTYPE_NEXT:
 			if( keyState == 0 ) {
                     [self performSelectorOnMainThread:@selector(forwardAction)
                                            withObject:nil waitUntilDone:NO];
@@ -108,6 +109,7 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
             return NULL;
             
 		case NX_KEYTYPE_REWIND:   // F7
+		case NX_KEYTYPE_PREVIOUS:
 			if( keyState == 0 ) {
                     [self performSelectorOnMainThread:@selector(backAction)
                                            withObject:nil waitUntilDone:NO];
