@@ -36,21 +36,21 @@
     // Load the user preferences.
     _defaults = [NSUserDefaults standardUserDefaults];
     
-	// Add an event tap to intercept the system defined media key events
+    // Add an event tap to intercept the system defined media key events
     eventTap = CGEventTapCreate(kCGSessionEventTap,
                                   kCGHeadInsertEventTap,
                                   kCGEventTapOptionDefault,
                                   CGEventMaskBit(NX_SYSDEFINED),
                                   event_tap_callback,
                                   (__bridge void *)(self));
-	if (!eventTap) {
-		fprintf(stderr, "failed to create event tap\n");
-		exit(1);
-	}
-	// Create a run loop source.
-	eventPortSource = CFMachPortCreateRunLoopSource( kCFAllocatorDefault, eventTap, 0 );
+    if (!eventTap) {
+        fprintf(stderr, "failed to create event tap\n");
+        exit(1);
+    }
+    // Create a run loop source.
+    eventPortSource = CFMachPortCreateRunLoopSource( kCFAllocatorDefault, eventTap, 0 );
     
-	// Enable the event tap.
+    // Enable the event tap.
     CGEventTapEnable(eventTap, true);
     
     // Let's do this in a separate thread so that a slow app doesn't lag the event tap
@@ -109,24 +109,24 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
     
     switch( keyCode )
     {
-		case NX_KEYTYPE_PLAY:   // F8
-			if( keyState == 0 ) {
+        case NX_KEYTYPE_PLAY:   // F8
+            if( keyState == 0 ) {
                     [self performSelectorOnMainThread:@selector(playPause)
                                        withObject:nil waitUntilDone:NO];
             }
             return NULL;
             
-		case NX_KEYTYPE_FAST:   // F9
-		case NX_KEYTYPE_NEXT:
-			if( keyState == 0 ) {
+        case NX_KEYTYPE_FAST:   // F9
+        case NX_KEYTYPE_NEXT:
+            if( keyState == 0 ) {
                     [self performSelectorOnMainThread:@selector(forwardAction)
                                            withObject:nil waitUntilDone:NO];
             }
             return NULL;
             
-		case NX_KEYTYPE_REWIND:   // F7
-		case NX_KEYTYPE_PREVIOUS:
-			if( keyState == 0 ) {
+        case NX_KEYTYPE_REWIND:   // F7
+        case NX_KEYTYPE_PREVIOUS:
+            if( keyState == 0 ) {
                     [self performSelectorOnMainThread:@selector(backAction)
                                            withObject:nil waitUntilDone:NO];
             }

@@ -13,7 +13,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, CustomWebViewDelegate>
 {
-	CFMachPortRef eventTap;
+    CFMachPortRef eventTap;
     CFRunLoopSourceRef eventPortSource;
 }
 
