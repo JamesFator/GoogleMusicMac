@@ -17,10 +17,25 @@
 { return YES; }
 
 /**
+ * Set defaults.
+ */
++ (void)initialize
+{
+    // Register default preferences.
+    NSString *prefsPath = [[NSBundle mainBundle] pathForResource:@"Preferences" ofType:@"plist"];
+    NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:prefsPath];
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:prefs];
+}
+
+/**
  * Application finished launching, we will register the event tap callback.
  */
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    // Load the user preferences.
+    _defaults = [NSUserDefaults standardUserDefaults];
+    
 	// Add an event tap to intercept the system defined media key events
     eventTap = CGEventTapCreate(kCGSessionEventTap,
                                   kCGHeadInsertEventTap,
@@ -32,10 +47,10 @@
 		fprintf(stderr, "failed to create event tap\n");
 		exit(1);
 	}
-	//Create a run loop source.
+	// Create a run loop source.
 	eventPortSource = CFMachPortCreateRunLoopSource( kCFAllocatorDefault, eventTap, 0 );
     
-	//Enable the event tap.
+	// Enable the event tap.
     CGEventTapEnable(eventTap, true);
     
     // Let's do this in a separate thread so that a slow app doesn't lag the event tap
@@ -43,6 +58,7 @@
     
     // Load the main page
     [webView setAppDelegate:self];
+    [webView setFrameLoadDelegate:self];
     [[webView preferences] setPlugInsEnabled:YES];
     NSURL *url = [NSURL URLWithString:@"https://play.google.com/music"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -117,7 +133,7 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
     return event;
 }
 
-#pragma mark - Play Actions
+# pragma mark - Play Actions
 
 /**
  * playPause toggles the playing status for the app
@@ -147,6 +163,80 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
     CGEventRef keyDownEvent = CGEventCreateKeyboardEvent(nil, (CGKeyCode)123, true);
     [window sendEvent:[NSEvent eventWithCGEvent:keyDownEvent]];
     CFRelease(keyDownEvent);
+}
+
+# pragma mark - Web Level
+
+/**
+ * didFinishLoadForFrame is called when the Web Frame finished loading.
+ * We take this time to execute the main.js file
+ */
+- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
+{
+    [self evaluateJavaScriptFile:@"main"];
+    [[sender windowScriptObject] setValue:self forKey:@"googleMusicApp"];
+}
+
+/**
+ * evaluateJavaScriptFile will load the JS file and execute it in the webView.
+ */
+- (void)evaluateJavaScriptFile:(NSString *)name
+{
+    NSString *file = [NSString stringWithFormat:@"js/%@", name];
+    NSString *path = [[NSBundle mainBundle] pathForResource:file ofType:@"js"];
+    NSString *js = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    
+    [webView stringByEvaluatingJavaScriptFromString:js];
+}
+
+/**
+ * notifySong is called when the song is updated. We use this to either
+ * bring up a standard OSX notification or a 3rd party notification.
+ */
+- (void)notifySong:(NSString *)title withArtist:(NSString *)artist
+             album:(NSString *)album art:(NSString *)art
+{
+    if ([_defaults boolForKey:@"notifications.enabled"]) {
+        NSUserNotification *notif = [[NSUserNotification alloc] init];
+        notif.title = title;
+        notif.informativeText = [NSString stringWithFormat:@"%@ — %@", artist, album];
+        
+        // Try to load the album art if possible.
+        if (art) {
+            NSURL *url = [NSURL URLWithString:art];
+            NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
+            
+            notif.contentImage = image;
+        }
+        
+        // Remove the previous notifications in order to make this notification appear immediately.
+        [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
+        
+        // Deliver the notification.
+        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notif];
+    }
+}
+
+/**
+ * webScriptNameForSelector will help the JS components access the notify selector.
+ */
++ (NSString*)webScriptNameForSelector:(SEL)sel
+{
+    if (sel == @selector(notifySong:withArtist:album:art:))
+        return @"notifySong";
+    
+    return nil;
+}
+
+/**
+ * isSelectorExcludedFromWebScript will prevent notify from being excluded from script.
+ */
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
+{
+    if (sel == @selector(notifySong:withArtist:album:art:))
+        return NO;
+    
+    return YES;
 }
 
 @end

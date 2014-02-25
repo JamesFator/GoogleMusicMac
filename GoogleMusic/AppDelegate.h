@@ -19,6 +19,7 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (nonatomic, retain) IBOutlet CustomWebView *webView;
+@property (assign) NSUserDefaults *defaults;
 
 - (void) playPause;
 - (void) forwardAction;
