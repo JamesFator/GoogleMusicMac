@@ -6,6 +6,15 @@
 //
 
 #import "AppDelegate.h"
+#import "LastFm/LastFm.h"
+#import "SSKeychain.h"
+
+#define SESSION_KEY @"lastfm.session"
+#define USERNAME_KEY @"lastfm.username"
+#define NOTIF_ENABLED_KEY @"notifications.enabled"
+#define LASTFM_ENABLED_KEY @"lastfm.enabled"
+
+static NSString *kServiceName = @"GoogleMusicMac";
 
 @implementation AppDelegate
 
@@ -63,6 +72,9 @@
     NSURL *url = [NSURL URLWithString:@"https://play.google.com/music"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [[webView mainFrame] loadRequest:request];
+    
+    // Initialize LastFm
+    [self initLastFM:self];
 }
 
 #pragma mark - Event tap methods
@@ -103,9 +115,8 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
     int keyFlags = ([keyEvent data1] & 0x0000FFFF);
     int keyState = (((keyFlags & 0xFF00) >> 8)) == 0xA;
     
-    OSStatus err = noErr;
     ProcessSerialNumber psn;
-    err = GetProcessForPID([[NSProcessInfo processInfo] processIdentifier], &psn);
+    GetProcessForPID([[NSProcessInfo processInfo] processIdentifier], &psn);
     
     switch( keyCode )
     {
@@ -182,7 +193,7 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
 /**
  * evaluateJavaScriptFile will load the JS file and execute it in the webView.
  */
-- (void)evaluateJavaScriptFile:(NSString *)name
+- (void)evaluateJavaScriptFile:(NSString*)name
 {
     NSString *file = [NSString stringWithFormat:@"js/%@", name];
     NSString *path = [[NSBundle mainBundle] pathForResource:file ofType:@"js"];
@@ -195,10 +206,11 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
  * notifySong is called when the song is updated. We use this to either
  * bring up a standard OSX notification or a 3rd party notification.
  */
-- (void)notifySong:(NSString *)title withArtist:(NSString *)artist
-             album:(NSString *)album art:(NSString *)art
+- (void)notifySong:(NSString*)title withArtist:(NSString*)artist
+             album:(NSString*)album art:(NSString*)art time:(NSString*)time
 {
-    if ([_defaults boolForKey:@"notifications.enabled"]) {
+    // Notification Center
+    if ([_defaults boolForKey:NOTIF_ENABLED_KEY]) {
         NSUserNotification *notif = [[NSUserNotification alloc] init];
         notif.title = title;
         notif.informativeText = [NSString stringWithFormat:@"%@ — %@", artist, album];
@@ -217,6 +229,28 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
         // Deliver the notification.
         [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notif];
     }
+    // Last.fm
+    if ([_defaults boolForKey:LASTFM_ENABLED_KEY]) {
+        NSTimeInterval duration = 0;
+        if (![time isEqualToString:@"Unknown"]) {
+            // If we have a time, convert to time interval
+            NSArray *timeSplit = [time componentsSeparatedByString:@":"];
+            @try {
+                duration += [timeSplit[0] intValue] * 60;   // 60 seconds in minute
+                duration += [timeSplit[1] intValue];        // seconds
+            }
+            @catch (NSException *exception) {}
+        }
+        [[LastFm sharedInstance] sendScrobbledTrack:title byArtist:artist
+                                            onAlbum:album withDuration:duration
+                                        atTimestamp:(int)[[NSDate date] timeIntervalSince1970]
+                                     successHandler:^(NSDictionary *result)
+        {
+//            NSLog(@"result: %@", result);
+        } failureHandler:^(NSError *error) {
+//            NSLog(@"error: %@", error);
+        }];
+    }
 }
 
 /**
@@ -224,7 +258,7 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
  */
 + (NSString*)webScriptNameForSelector:(SEL)sel
 {
-    if (sel == @selector(notifySong:withArtist:album:art:))
+    if (sel == @selector(notifySong:withArtist:album:art:time:))
         return @"notifySong";
     
     return nil;
@@ -235,10 +269,118 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
  */
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
 {
-    if (sel == @selector(notifySong:withArtist:album:art:))
+    if (sel == @selector(notifySong:withArtist:album:art:time:))
         return NO;
     
     return YES;
+}
+
+# pragma mark - Last.fm
+
+/**
+ * initLastFM will start and stop the LastFm sharedInstance and log in if we can.
+ */
+- (IBAction)initLastFM:(id)sender
+{
+    if ([_defaults boolForKey:LASTFM_ENABLED_KEY]) {
+        // Set the Last.fm session info
+        // THESE NEED TO BE REPLACED WITH DEVELOPER API CREDENTIALS
+        [LastFm sharedInstance].apiKey = @"xxx";
+        [LastFm sharedInstance].apiSecret = @"xxx";
+        
+        [_loginButton setEnabled:YES];
+        [[LastFm sharedInstance] getSessionInfoWithSuccessHandler:^(NSDictionary *result) {
+            // Log in if we're already logged in
+            [_loginButton setTitle:[NSString stringWithFormat:@"Logout %@", result[@"name"]]];
+            [_loginButton setAction:@selector(logout)];
+            [self enableLoginForm:NO];
+        } failureHandler:^(NSError *error) {
+            // No, show login form
+            [self enableLoginForm:YES];
+            [_loginButton setTitle:@"Login"];
+            [_loginButton setAction:@selector(login)];
+            [self login];
+        }];
+    } else {
+        [self enableLoginForm:NO];
+        [_loginButton setTitle:@"Login"];
+        [_loginButton setAction:@selector(login)];
+        [_loginButton setEnabled:NO];
+        // Remove the securely stored password
+        NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:USERNAME_KEY];
+        [SSKeychain deletePasswordForService:kServiceName account:username];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:USERNAME_KEY];
+    }
+}
+
+/**
+ * enableLoginForm will enable/disable the username/password fields.
+ * @param hide - whether or not we want to enable the fields
+ */
+- (void)enableLoginForm:(BOOL)hide
+{
+    [_usernameField setEnabled:hide];
+    [_passwordField setEnabled:hide];
+}
+
+/**
+ * login will sign the user into LastFm scrobbling.
+ */
+- (void)login
+{
+    NSString *username = _usernameField.stringValue;
+    NSString *password = _passwordField.stringValue;
+    if ([_passwordField.stringValue length] == 0) {
+        // Test if saved securely
+        username = [[NSUserDefaults standardUserDefaults] objectForKey:USERNAME_KEY];
+        if (username) {
+            _usernameField.stringValue = username;
+            password = [SSKeychain passwordForService:kServiceName account:username];
+        } else {
+            username = @"";
+        }
+    }
+    [[LastFm sharedInstance] getSessionForUser:username
+                                      password:password
+                                successHandler:^(NSDictionary *result)
+    {
+        // Save the session into NSUserDefaults. It is loaded on app start up in AppDelegate.
+        [[NSUserDefaults standardUserDefaults] setObject:result[@"key"] forKey:SESSION_KEY];
+        [[NSUserDefaults standardUserDefaults] setObject:result[@"name"] forKey:USERNAME_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        // Also set the session of the LastFm object
+        [LastFm sharedInstance].session = result[@"key"];
+        [LastFm sharedInstance].username = result[@"name"];
+        
+        // Show the logout button
+        [self.loginButton setTitle:[NSString stringWithFormat:@"Logout %@", result[@"name"]]];
+        [self.loginButton setAction:@selector(logout)];
+        [self enableLoginForm:NO];
+        
+        // Store the credentials in Keychain securely
+        [SSKeychain setPassword:password forService:kServiceName account:username];
+    } failureHandler:^(NSError *error) {
+        // TODO: Error message
+    }];
+    // Clear the password
+    [_passwordField setStringValue:@""];
+}
+
+/**
+ * logout will sign the user out of LastFm scrobbling.
+ */
+- (void)logout
+{
+    [self enableLoginForm:YES];
+    [_loginButton setTitle:@"Login"];
+    [_loginButton setAction:@selector(login)];
+    [[LastFm sharedInstance] logout];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:SESSION_KEY];
+    // Remove the securely stored password
+    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:USERNAME_KEY];
+    [SSKeychain deletePasswordForService:kServiceName account:username];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:USERNAME_KEY];
 }
 
 @end

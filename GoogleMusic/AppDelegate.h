@@ -20,9 +20,15 @@
 @property (assign) IBOutlet NSWindow *window;
 @property (nonatomic, retain) IBOutlet CustomWebView *webView;
 @property (assign) NSUserDefaults *defaults;
+@property (weak) IBOutlet NSButton *loginButton;
+@property (weak) IBOutlet NSTextField *usernameField;
+@property (weak) IBOutlet NSSecureTextField *passwordField;
 
 - (void) playPause;
 - (void) forwardAction;
 - (void) backAction;
+
+// Preferences
+- (IBAction)initLastFM:(id)sender;
 
 @end

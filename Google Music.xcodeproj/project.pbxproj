@@ -10,6 +10,18 @@
 		1A1C923018BC603C00E4F481 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 1A1C922F18BC603C00E4F481 /* js */; };
 		1A1C923218BC60B800E4F481 /* LICENSE_ANWAR.md in Resources */ = {isa = PBXBuildFile; fileRef = 1A1C923118BC60B800E4F481 /* LICENSE_ANWAR.md */; };
 		1A1C923418BC66B700E4F481 /* Preferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A1C923318BC66B700E4F481 /* Preferences.plist */; };
+		1A1C923818BC72B500E4F481 /* LICENSE_KISSXML.md in Resources */ = {isa = PBXBuildFile; fileRef = 1A1C923718BC72B500E4F481 /* LICENSE_KISSXML.md */; };
+		1A1C923C18BC72EC00E4F481 /* LICENSE_LASTFM.md in Resources */ = {isa = PBXBuildFile; fileRef = 1A1C923B18BC72EC00E4F481 /* LICENSE_LASTFM.md */; };
+		1A1C923E18BC732000E4F481 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 1A1C923D18BC732000E4F481 /* LICENSE.md */; };
+		1A1C926C18BC7E2400E4F481 /* DDXMLElementAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1C925F18BC7E2400E4F481 /* DDXMLElementAdditions.m */; };
+		1A1C926D18BC7E2400E4F481 /* NSString+DDXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1C926218BC7E2400E4F481 /* NSString+DDXML.m */; };
+		1A1C926E18BC7E2400E4F481 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1C926518BC7E2400E4F481 /* DDXMLDocument.m */; };
+		1A1C926F18BC7E2400E4F481 /* DDXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1C926718BC7E2400E4F481 /* DDXMLElement.m */; };
+		1A1C927018BC7E2400E4F481 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1C926918BC7E2400E4F481 /* DDXMLNode.m */; };
+		1A1C927318BC7FD300E4F481 /* LastFm.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1C927218BC7FD300E4F481 /* LastFm.m */; };
+		1A1C927718BC8B8200E4F481 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1C927618BC8B8200E4F481 /* Security.framework */; };
+		1A1C927A18BC8BAA00E4F481 /* LICENSE_SSKEYCHAIN.md in Resources */ = {isa = PBXBuildFile; fileRef = 1A1C927918BC8BAA00E4F481 /* LICENSE_SSKEYCHAIN.md */; };
+		1A1C927D18BC8BF100E4F481 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1C927C18BC8BF100E4F481 /* SSKeychain.m */; };
 		1A68DAD81803B588004CBA25 /* CustomWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A68DAD71803B588004CBA25 /* CustomWebView.m */; };
 		1A7B684017453E40001E509E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A7B683F17453E40001E509E /* Cocoa.framework */; };
 		1A7B684A17453E40001E509E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A7B684817453E40001E509E /* InfoPlist.strings */; };
@@ -25,6 +37,30 @@
 		1A1C922F18BC603C00E4F481 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
 		1A1C923118BC60B800E4F481 /* LICENSE_ANWAR.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_ANWAR.md; sourceTree = "<group>"; };
 		1A1C923318BC66B700E4F481 /* Preferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Preferences.plist; sourceTree = "<group>"; };
+		1A1C923718BC72B500E4F481 /* LICENSE_KISSXML.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_KISSXML.md; sourceTree = "<group>"; };
+		1A1C923B18BC72EC00E4F481 /* LICENSE_LASTFM.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_LASTFM.md; sourceTree = "<group>"; };
+		1A1C923D18BC732000E4F481 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.md; sourceTree = "<group>"; };
+		1A1C924118BC7CB000E4F481 /* LastFm */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LastFm; path = GoogleMusic/LastFm; sourceTree = "<group>"; };
+		1A1C924318BC7CBA00E4F481 /* KissXML */ = {isa = PBXFileReference; lastKnownFileType = folder; name = KissXML; path = GoogleMusic/KissXML; sourceTree = "<group>"; };
+		1A1C925A18BC7D5700E4F481 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		1A1C925E18BC7E2400E4F481 /* DDXMLElementAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLElementAdditions.h; sourceTree = "<group>"; };
+		1A1C925F18BC7E2400E4F481 /* DDXMLElementAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLElementAdditions.m; sourceTree = "<group>"; };
+		1A1C926118BC7E2400E4F481 /* NSString+DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DDXML.h"; sourceTree = "<group>"; };
+		1A1C926218BC7E2400E4F481 /* NSString+DDXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDXML.m"; sourceTree = "<group>"; };
+		1A1C926318BC7E2400E4F481 /* DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXML.h; sourceTree = "<group>"; };
+		1A1C926418BC7E2400E4F481 /* DDXMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLDocument.h; sourceTree = "<group>"; };
+		1A1C926518BC7E2400E4F481 /* DDXMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLDocument.m; sourceTree = "<group>"; };
+		1A1C926618BC7E2400E4F481 /* DDXMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLElement.h; sourceTree = "<group>"; };
+		1A1C926718BC7E2400E4F481 /* DDXMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLElement.m; sourceTree = "<group>"; };
+		1A1C926818BC7E2400E4F481 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
+		1A1C926918BC7E2400E4F481 /* DDXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLNode.m; sourceTree = "<group>"; };
+		1A1C926B18BC7E2400E4F481 /* DDXMLPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLPrivate.h; sourceTree = "<group>"; };
+		1A1C927118BC7FD300E4F481 /* LastFm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LastFm.h; path = LastFm/LastFm.h; sourceTree = "<group>"; };
+		1A1C927218BC7FD300E4F481 /* LastFm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LastFm.m; path = LastFm/LastFm.m; sourceTree = "<group>"; };
+		1A1C927618BC8B8200E4F481 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		1A1C927918BC8BAA00E4F481 /* LICENSE_SSKEYCHAIN.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_SSKEYCHAIN.md; sourceTree = "<group>"; };
+		1A1C927B18BC8BF100E4F481 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSKeychain.h; path = GoogleMusic/SSKeychain/SSKeychain.h; sourceTree = "<group>"; };
+		1A1C927C18BC8BF100E4F481 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSKeychain.m; path = GoogleMusic/SSKeychain/SSKeychain.m; sourceTree = "<group>"; };
 		1A68DAD61803B588004CBA25 /* CustomWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomWebView.h; sourceTree = "<group>"; };
 		1A68DAD71803B588004CBA25 /* CustomWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomWebView.m; sourceTree = "<group>"; };
 		1A7B683C17453E40001E509E /* Google Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Google Music.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,7 +77,7 @@
 		1A7B685217453E40001E509E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1A7B685517453E40001E509E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		1A7B687317453E4C001E509E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		1A7B68801745ABBD001E509E /* Google MusicIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Google MusicIcon.icns"; sourceTree = "<group>"; };
+		1A7B68801745ABBD001E509E /* Google MusicIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Google MusicIcon.icns"; path = "../Google MusicIcon.icns"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A1C927718BC8B8200E4F481 /* Security.framework in Frameworks */,
 				1A7B687417453E4C001E509E /* WebKit.framework in Frameworks */,
 				1A7B684017453E40001E509E /* Cocoa.framework in Frameworks */,
 			);
@@ -57,10 +94,75 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A1C925C18BC7E2400E4F481 /* KissXML */ = {
+			isa = PBXGroup;
+			children = (
+				1A1C925D18BC7E2400E4F481 /* Additions */,
+				1A1C926018BC7E2400E4F481 /* Categories */,
+				1A1C926318BC7E2400E4F481 /* DDXML.h */,
+				1A1C926418BC7E2400E4F481 /* DDXMLDocument.h */,
+				1A1C926518BC7E2400E4F481 /* DDXMLDocument.m */,
+				1A1C926618BC7E2400E4F481 /* DDXMLElement.h */,
+				1A1C926718BC7E2400E4F481 /* DDXMLElement.m */,
+				1A1C926818BC7E2400E4F481 /* DDXMLNode.h */,
+				1A1C926918BC7E2400E4F481 /* DDXMLNode.m */,
+				1A1C926A18BC7E2400E4F481 /* Private */,
+			);
+			name = KissXML;
+			path = GoogleMusic/KissXML;
+			sourceTree = "<group>";
+		};
+		1A1C925D18BC7E2400E4F481 /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				1A1C925E18BC7E2400E4F481 /* DDXMLElementAdditions.h */,
+				1A1C925F18BC7E2400E4F481 /* DDXMLElementAdditions.m */,
+			);
+			path = Additions;
+			sourceTree = "<group>";
+		};
+		1A1C926018BC7E2400E4F481 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				1A1C926118BC7E2400E4F481 /* NSString+DDXML.h */,
+				1A1C926218BC7E2400E4F481 /* NSString+DDXML.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		1A1C926A18BC7E2400E4F481 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				1A1C926B18BC7E2400E4F481 /* DDXMLPrivate.h */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		1A1C927518BC7FF900E4F481 /* LastFm */ = {
+			isa = PBXGroup;
+			children = (
+				1A1C927118BC7FD300E4F481 /* LastFm.h */,
+				1A1C927218BC7FD300E4F481 /* LastFm.m */,
+			);
+			name = LastFm;
+			path = GoogleMusic;
+			sourceTree = "<group>";
+		};
+		1A1C927818BC8B9300E4F481 /* SSKeychain */ = {
+			isa = PBXGroup;
+			children = (
+				1A1C927B18BC8BF100E4F481 /* SSKeychain.h */,
+				1A1C927C18BC8BF100E4F481 /* SSKeychain.m */,
+			);
+			name = SSKeychain;
+			sourceTree = "<group>";
+		};
 		1A7B683317453E40001E509E = {
 			isa = PBXGroup;
 			children = (
-				1A7B68801745ABBD001E509E /* Google MusicIcon.icns */,
+				1A1C927818BC8B9300E4F481 /* SSKeychain */,
+				1A1C927518BC7FF900E4F481 /* LastFm */,
+				1A1C925C18BC7E2400E4F481 /* KissXML */,
 				1A7B684517453E40001E509E /* GoogleMusic */,
 				1A7B683E17453E40001E509E /* Frameworks */,
 				1A7B683D17453E40001E509E /* Products */,
@@ -78,6 +180,10 @@
 		1A7B683E17453E40001E509E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A1C927618BC8B8200E4F481 /* Security.framework */,
+				1A1C925A18BC7D5700E4F481 /* libxml2.dylib */,
+				1A1C924318BC7CBA00E4F481 /* KissXML */,
+				1A1C924118BC7CB000E4F481 /* LastFm */,
 				1A7B687317453E4C001E509E /* WebKit.framework */,
 				1A7B683F17453E40001E509E /* Cocoa.framework */,
 				1A7B684117453E40001E509E /* Other Frameworks */,
@@ -112,12 +218,17 @@
 		1A7B684617453E40001E509E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1A7B68801745ABBD001E509E /* Google MusicIcon.icns */,
 				1A7B684717453E40001E509E /* Google Music-Info.plist */,
 				1A7B684817453E40001E509E /* InfoPlist.strings */,
 				1A7B684B17453E40001E509E /* main.m */,
 				1A7B684D17453E40001E509E /* Google Music-Prefix.pch */,
 				1A7B684E17453E40001E509E /* Credits.rtf */,
+				1A1C923D18BC732000E4F481 /* LICENSE.md */,
 				1A1C923118BC60B800E4F481 /* LICENSE_ANWAR.md */,
+				1A1C923718BC72B500E4F481 /* LICENSE_KISSXML.md */,
+				1A1C923B18BC72EC00E4F481 /* LICENSE_LASTFM.md */,
+				1A1C927918BC8BAA00E4F481 /* LICENSE_SSKEYCHAIN.md */,
 				1A1C923318BC66B700E4F481 /* Preferences.plist */,
 			);
 			name = "Supporting Files";
@@ -176,10 +287,14 @@
 			files = (
 				1A1C923018BC603C00E4F481 /* js in Resources */,
 				1A1C923418BC66B700E4F481 /* Preferences.plist in Resources */,
+				1A1C923818BC72B500E4F481 /* LICENSE_KISSXML.md in Resources */,
+				1A1C927A18BC8BAA00E4F481 /* LICENSE_SSKEYCHAIN.md in Resources */,
+				1A1C923E18BC732000E4F481 /* LICENSE.md in Resources */,
 				1A7B684A17453E40001E509E /* InfoPlist.strings in Resources */,
 				1A1C923218BC60B800E4F481 /* LICENSE_ANWAR.md in Resources */,
 				1A7B685017453E40001E509E /* Credits.rtf in Resources */,
 				1A7B685617453E40001E509E /* MainMenu.xib in Resources */,
+				1A1C923C18BC72EC00E4F481 /* LICENSE_LASTFM.md in Resources */,
 				1A7B68811745ABBD001E509E /* Google MusicIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -194,6 +309,13 @@
 				1A68DAD81803B588004CBA25 /* CustomWebView.m in Sources */,
 				1A7B684C17453E40001E509E /* main.m in Sources */,
 				1A7B685317453E40001E509E /* AppDelegate.m in Sources */,
+				1A1C926C18BC7E2400E4F481 /* DDXMLElementAdditions.m in Sources */,
+				1A1C926D18BC7E2400E4F481 /* NSString+DDXML.m in Sources */,
+				1A1C927318BC7FD300E4F481 /* LastFm.m in Sources */,
+				1A1C926E18BC7E2400E4F481 /* DDXMLDocument.m in Sources */,
+				1A1C926F18BC7E2400E4F481 /* DDXMLElement.m in Sources */,
+				1A1C927018BC7E2400E4F481 /* DDXMLNode.m in Sources */,
+				1A1C927D18BC8BF100E4F481 /* SSKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,11 +409,21 @@
 		1A7B686E17453E40001E509E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GoogleMusic/Google Music-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/include/libxml2,
+					"/Applications/Xcode51-DP.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+				);
 				INFOPLIST_FILE = "GoogleMusic/Google Music-Info.plist";
+				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = "Google Music";
 				WRAPPER_EXTENSION = app;
 			};
@@ -300,11 +432,21 @@
 		1A7B686F17453E40001E509E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GoogleMusic/Google Music-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/include/libxml2,
+					"/Applications/Xcode51-DP.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+				);
 				INFOPLIST_FILE = "GoogleMusic/Google Music-Info.plist";
+				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = "Google Music";
 				WRAPPER_EXTENSION = app;
 			};

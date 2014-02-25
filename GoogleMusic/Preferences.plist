@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>lastfm.session</key>
+	<string></string>
+	<key>lastfm.username</key>
+	<string></string>
+	<key>lastfm.enabled</key>
+	<false/>
 	<key>notifications.enabled</key>
 	<true/>
 </dict>

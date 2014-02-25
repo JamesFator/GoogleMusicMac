@@ -31,11 +31,13 @@ if (typeof window.MusicAPI === 'undefined') {
                     var artist = document.querySelector('#player-artist');
                     var album = document.querySelector('.player-album');
                     var art = document.querySelector('#playingAlbumArt');
+                    var time = document.querySelector('#time_container_duration');
 
                     title = (title) ? title.innerText : 'Unknown';
                     artist = (artist) ? artist.innerText : 'Unknown';
                     album = (album) ? album.innerText : 'Unknown';
                     art = (art) ? art.src : null;
+                    time = (time) ? time.innerText : 'Unknown';
 
                     // The art may be a protocol-relative URL, so normalize it to HTTPS.
                     if (art && art.slice(0, 2) === '//') {
@@ -45,7 +47,7 @@ if (typeof window.MusicAPI === 'undefined') {
                     // Make sure that this is the first of the notifications for the
                     // insertion of the song information elements.
                     if (lastTitle != title || lastArtist != artist || lastAlbum != album) {
-                        window.googleMusicApp.notifySong(title, artist, album, art); 
+                        window.googleMusicApp.notifySong(title, artist, album, art, time);
 
                         lastTitle = title;
                         lastArtist = artist;
