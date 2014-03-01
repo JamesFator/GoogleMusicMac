@@ -23,6 +23,7 @@
 @property (weak) IBOutlet NSButton *loginButton;
 @property (weak) IBOutlet NSTextField *usernameField;
 @property (weak) IBOutlet NSSecureTextField *passwordField;
+@property (nonatomic) NSString *songCheck;
 
 - (void) playPause;
 - (void) forwardAction;

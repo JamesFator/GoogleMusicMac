@@ -210,6 +210,7 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
              album:(NSString*)album art:(NSString*)art time:(NSString*)time
 {
     // Notification Center
+    NSString *songData = [NSString stringWithFormat:@"%@%@%@%@",title,artist,album,time];
     if ([_defaults boolForKey:NOTIF_ENABLED_KEY]) {
         NSUserNotification *notif = [[NSUserNotification alloc] init];
         notif.title = title;
@@ -241,16 +242,24 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
             }
             @catch (NSException *exception) {}
         }
-        [[LastFm sharedInstance] sendScrobbledTrack:title byArtist:artist
-                                            onAlbum:album withDuration:duration
-                                        atTimestamp:(int)[[NSDate date] timeIntervalSince1970]
-                                     successHandler:^(NSDictionary *result)
-        {
-//            NSLog(@"result: %@", result);
-        } failureHandler:^(NSError *error) {
-//            NSLog(@"error: %@", error);
-        }];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration/2 * NSEC_PER_SEC),
+                       dispatch_get_main_queue(),
+        ^{
+            if ([songData isEqualTo:_songCheck]) {
+                // If the song check is the same
+                [[LastFm sharedInstance] sendScrobbledTrack:title byArtist:artist
+                                                    onAlbum:album withDuration:duration
+                                                atTimestamp:(int)[[NSDate date] timeIntervalSince1970]
+                                             successHandler:^(NSDictionary *result)
+                 {
+//                     NSLog(@"result: %@", result);
+                 } failureHandler:^(NSError *error) {
+//                     NSLog(@"error: %@", error);
+                 }];
+            }
+        });
     }
+    _songCheck = songData;
 }
 
 /**
