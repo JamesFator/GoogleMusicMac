@@ -44,7 +44,7 @@
     // Load the main page
     [webView setAppDelegate:self];
     [[webView preferences] setPlugInsEnabled:YES];
-    NSURL *url = [NSURL URLWithString:@"https://play.google.com/music"];
+    NSURL *url = [NSURL URLWithString:@"http://plex.tv/web/app"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [[webView mainFrame] loadRequest:request];
 }
