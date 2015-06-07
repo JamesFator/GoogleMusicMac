@@ -68,6 +68,7 @@ static NSString *kServiceName = @"GoogleMusicMac";
     // Load the main page
     [webView setAppDelegate:self];
     [webView setFrameLoadDelegate:self];
+    [webView setResourceLoadDelegate:self];
     [[webView preferences] setPlugInsEnabled:YES];
     NSURL *url = [NSURL URLWithString:@"https://play.google.com/music"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -188,6 +189,19 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy,
 {
     [self evaluateJavaScriptFile:@"main"];
     [[sender windowScriptObject] setValue:self forKey:@"googleMusicApp"];
+}
+
+
+- (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource
+{
+    if ([[[request URL] lastPathComponent] isEqualToString:@"webcomponents.js"]) {
+        // Load our modified version
+        [self evaluateJavaScriptFile:@"webcomponents"];
+        // Prevent original request from being made
+        return [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://google.com"]];
+    } else {
+        return request;
+    }
 }
 
 /**
